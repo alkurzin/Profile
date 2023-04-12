@@ -1,22 +1,12 @@
 import React, { useState } from 'react'
-import { Button, Form } from 'react-bootstrap';
+import { Form } from 'react-bootstrap';
 import './MainPage.css'
 import IpPage from './IpPage/IpPage';
 import YlPage from './YlPage/YlPage';
-import { useNavigate } from 'react-router-dom';
 
 const MainPage = () => {
     const [type, setType] = useState(1);
-    const navigate = useNavigate();
-
-    let onNavigate = () => {
-        navigate('/bankDetails', { 
-            state: {
-                id: 7,
-                color: 'green' 
-            }
-        });
-    }
+    
     let onPriorityChange = (e) => {
         let newType = e.target.value;
         setType(newType);
@@ -34,15 +24,11 @@ const MainPage = () => {
 
             <div className='arrow' />
 
-            {type == 1 ?
+            {type === '1' ?
                 <IpPage />
                 :
                 <YlPage />
             }
-
-            <Button onClick={onNavigate}>
-                Далее
-            </Button>
         </div>
     )
 }

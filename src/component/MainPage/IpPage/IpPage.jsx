@@ -1,8 +1,20 @@
 import React from 'react'
 import './IpPage.css'
-import { Form } from 'react-bootstrap'
+import { Button, Form } from 'react-bootstrap'
+import { useNavigate } from 'react-router-dom';
 
 const IpPage = () => {
+    const navigate = useNavigate();
+
+    let onNavigate = () => {
+        navigate('/bankDetails', { 
+            state: {
+                id: 7,
+                color: 'green' 
+            }
+        });
+    }
+    
     return (
         <div>
             <div className='ip-title'>Индивидуальный предприниматель (ИП)</div>
@@ -61,6 +73,11 @@ const IpPage = () => {
                         </Form>
                     </div>
                 </div>
+            </div>
+            <div className='nav-btn-wrapper'>
+                <Button className='nav-btn' onClick={onNavigate}>
+                    Далее
+                </Button>
             </div>
         </div>
     )

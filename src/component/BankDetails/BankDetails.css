@@ -43,7 +43,6 @@
 .tooltip {
     padding: 12px;
     box-sizing: border-box;
-    width: 216px;
     height: 58px;
     left: 589px;
     top: 220px;
@@ -55,6 +54,7 @@
     font-size: 12px;
     text-align: center;
     color: #5E5E58;
+    z-index: 1000;
 }
 
 .btn-new-details {
@@ -67,4 +67,14 @@
     opacity: 0.87;
     border: none;
     background-color: white;
+}
+
+.bank-details-btn-wrapper {
+    width: 720px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.bank-details-btn {
+    width: 100px;
 }

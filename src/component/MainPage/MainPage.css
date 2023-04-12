@@ -46,9 +46,13 @@
     background-size: contain;
 }
 
-.nav-btn:active,
-.nav-btn:hover, 
+
+.nav-btn-wrapper {
+    width: 1040px;
+    display: flex;
+    justify-content: flex-end;
+}
+
 .nav-btn {
-  text-decoration: none;
-  color: white;
+    width: 100px;
 }
