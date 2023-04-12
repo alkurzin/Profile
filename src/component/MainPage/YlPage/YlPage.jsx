@@ -1,8 +1,32 @@
 import React from 'react'
 import './YlPage.css'
 import { Form } from 'react-bootstrap'
+import { useDispatch, useSelector } from 'react-redux';
+import { setFullName, setInn, setSmallName } from '../../../redux/ylPage-reducer';
+import { getYL } from '../../../asyncAction/test';
 
 const YlPage = () => {
+    const dispatch = useDispatch();
+    const fullName = useSelector(state => state.ylPage.fullName);
+    const smalName = useSelector(state => state.ylPage.smalName);
+    const inn = useSelector(state => state.ylPage.inn);
+
+    let onFullNameChange= (e) => {
+        dispatch(setFullName(e.target.value));
+    }
+
+    let onSmalNameChange= (e) => {
+        dispatch(setSmallName(e.target.value));
+    }
+
+    let onInnChange= (e) => {
+        let newInn = e.target.value;
+        dispatch(setInn(newInn));
+        if(newInn.length === 10){
+            dispatch(getYL(newInn));
+        }
+    }
+
     return (
         <div>
             <div className='yl-title'>Общество с ограниченной ответственностью (ООО)</div>
@@ -11,11 +35,15 @@ const YlPage = () => {
                 <div className='input-container'>
                     <div className='input-titel'>Наименование полное*</div>
                     <input className='input-xl'
+                        value={fullName}
+                        onChange={onFullNameChange}
                         placeholder='ООО «Московская промышленная компания»' />
                 </div>
                 <div className='input-container'>
                     <div className='input-titel'>Наименование сокращенное*</div>
                     <input className='input-lg'
+                        value={smalName}
+                        onChange={onSmalNameChange}
                         placeholder='ООО «МПК»' />
                 </div>
                 <div className='input-container'>
@@ -29,6 +57,8 @@ const YlPage = () => {
                 <div className='input-container'>
                     <div className='input-titel'>ИНН*</div>
                     <input className='input-sm'
+                        value={inn}
+                        onChange={onInnChange}
                         placeholder='хххххххххх' />
                 </div>
                 <div className='input-container'>
