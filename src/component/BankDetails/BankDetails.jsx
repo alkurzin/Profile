@@ -38,8 +38,6 @@ const BankDetails = (props) => {
 
     return (
         <div>
-            <div className='bank-details-title'>Банковские реквизиты</div>
-
             <div className='input-row'>
                 <div className='input-container'>
                     <div className='input-titel'>БИК*</div>

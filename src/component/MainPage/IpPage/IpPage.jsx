@@ -1,9 +1,10 @@
-import React from 'react'
+import React, { useRef, useState } from 'react'
 import './IpPage.css'
 import { Button, Form } from 'react-bootstrap'
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { setISNoContract, setInn, setOgrn, setRegistrationDate } from '../../../redux/ipPage-reducer';
+import { setISNoContract, setInn, setInnScan, setOgrn, setRegistrationDate } from '../../../redux/ipPage-reducer';
+import { Upload } from 'react-bootstrap-icons';
 
 const IpPage = () => {
     const dispatch = useDispatch();
@@ -15,6 +16,14 @@ const IpPage = () => {
     const egripScan = useSelector(state => state.ipPage.egripScan);
     const contractRentScan = useSelector(state => state.ipPage.contractRentScan);
     const isNoContract = useSelector(state => state.ipPage.isNoContract);
+
+    const [innScanPlaceholder, setInnScanPlaceholder ] = useState("Выберите или перетащите файл");
+
+    const filePickerInnScan = useRef(null);
+    let onInnScanChange = (e) => {
+        setInnScanPlaceholder(e.target.files[0].name)
+        dispatch(setInnScan(e.target.files[0]));
+    }
 
     let onRegistrationDateChange = (e) => {
         dispatch(setRegistrationDate(e.target.value));
@@ -51,6 +60,10 @@ const IpPage = () => {
         });
     }
 
+    let onClikInnScan = () => {
+        filePickerInnScan.current.click();
+    }
+
     return (
         <div>
             <div className='ip-title'>Индивидуальный предприниматель (ИП)</div>
@@ -63,10 +76,19 @@ const IpPage = () => {
                         onChange={onInnChange}
                         placeholder='хххххххххх' />
                 </div>
+
                 <div className='input-container'>
                     <div className='input-titel'>Скан ИНН*</div>
-                    <input className='input-lg'
-                        placeholder='Выберите или перетащите файл' />
+                    <div onClick={onClikInnScan} className='input-lg input-uplpd'>
+                        <div className='input-uplpd-placeholder'>{innScanPlaceholder}</div>
+                        <div className='input-uplpd-icon'><Upload/></div>
+                    </div>
+                    <input className='hidden'
+                        type="file"
+                        ref={filePickerInnScan}
+                        //value={innScan}
+                        onChange={onInnScanChange}
+                        accept='.png, .jpg, .jpeg, .pdf'/>
                 </div>
 
                 <div className='input-container'>

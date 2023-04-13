@@ -83,3 +83,43 @@
     color: #999999;
     opacity: 0.87;
 }
+
+.hidden {
+    opacity: 0;
+    height: 0;
+    width: 0;
+    line-height: 0;
+    overflow: hidden;
+    padding: 0;
+    margin: 0;
+}
+
+.input-uplpd {
+    display: flex;
+    justify-content: space-between;
+}
+
+.input-uplpd-placeholder {
+    width: 237px;
+    height: 18px;
+    margin-left: 20px;
+    margin-top: 18px;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 18px;
+    color: #999999;
+    opacity: 0.7;
+}
+
+.input-uplpd-icon {
+    width: 52px;
+    left: 284px;
+    top: 0px;
+    background: #5795FD;
+    border-radius: 0px 7px 7px 0px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+}
