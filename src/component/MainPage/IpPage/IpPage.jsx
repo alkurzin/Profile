@@ -3,7 +3,7 @@ import './IpPage.css'
 import { Button, Form } from 'react-bootstrap'
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { setISNoContract, setInn, setInnScan, setOgrn, setRegistrationDate } from '../../../redux/ipPage-reducer';
+import { setContractRentScan, setEgripScan, setISNoContract, setInn, setInnScan, setOgrn, setOgrnScan, setRegistrationDate } from '../../../redux/ipPage-reducer';
 import { Upload } from 'react-bootstrap-icons';
 
 const IpPage = () => {
@@ -18,11 +18,33 @@ const IpPage = () => {
     const isNoContract = useSelector(state => state.ipPage.isNoContract);
 
     const [innScanPlaceholder, setInnScanPlaceholder ] = useState("Выберите или перетащите файл");
+    const [ogrnScanPlaceholder, setOgrnScanPlaceholder ] = useState("Выберите или перетащите файл");
+    const [egripScanPlaceholder, setEgripScanPlaceholder ] = useState("Выберите или перетащите файл");
+    const [contractRentScanPlaceholder, setContractRentScanPlaceholder ] = useState("Выберите или перетащите файл");
 
     const filePickerInnScan = useRef(null);
+    const filePickerOgrnScan = useRef(null);
+    const filePickerEgripScan = useRef(null);
+    const filePickerContractRentScan = useRef(null);
+
     let onInnScanChange = (e) => {
         setInnScanPlaceholder(e.target.files[0].name)
         dispatch(setInnScan(e.target.files[0]));
+    }
+
+    let onOgrnScanChange = (e) => {
+        setOgrnScanPlaceholder(e.target.files[0].name)
+        dispatch(setOgrnScan(e.target.files[0]));
+    }
+
+    let onEgripScanChange = (e) => {
+        setEgripScanPlaceholder(e.target.files[0].name)
+        dispatch(setEgripScan(e.target.files[0]));
+    }
+
+    let onContractRentScanChange = (e) => {
+        setContractRentScanPlaceholder(e.target.files[0].name)
+        dispatch(setContractRentScan(e.target.files[0]));
     }
 
     let onRegistrationDateChange = (e) => {
@@ -64,6 +86,18 @@ const IpPage = () => {
         filePickerInnScan.current.click();
     }
 
+    let onClikOgrnScan = () => {
+        filePickerOgrnScan.current.click();
+    }
+
+    let onClikEgripScan = () => {
+        filePickerEgripScan.current.click();
+    }
+
+    let onClikContractRentScan = () => {
+        filePickerContractRentScan.current.click();
+    }
+
     return (
         <div>
             <div className='ip-title'>Индивидуальный предприниматель (ИП)</div>
@@ -101,8 +135,15 @@ const IpPage = () => {
                 </div>
                 <div className='input-container'>
                     <div className='input-titel'>Скан ОГРНИП*</div>
-                    <input className='input-lg'
-                        placeholder='Выберите или перетащите файл' />
+                    <div onClick={onClikOgrnScan} className='input-lg input-uplpd'>
+                        <div className='input-uplpd-placeholder'>{ogrnScanPlaceholder}</div>
+                        <div className='input-uplpd-icon'><Upload/></div>
+                    </div>
+                    <input className='hidden'
+                        type="file"
+                        ref={filePickerOgrnScan}
+                        onChange={onOgrnScanChange}
+                        accept='.png, .jpg, .jpeg, .pdf'/>
                 </div>
             </div>
             <div className='input-row'>
@@ -115,14 +156,27 @@ const IpPage = () => {
                 </div>
                 <div className='input-container'>
                     <div className='input-titel'>Скан выписки из ЕГРИП (не старше 3 месяцев)*</div>
-                    <input className='input-lg'
-                        placeholder='Выберите или перетащите файл' />
+                    <div onClick={onClikEgripScan} className='input-lg input-uplpd'>
+                        <div className='input-uplpd-placeholder'>{egripScanPlaceholder}</div>
+                        <div className='input-uplpd-icon'><Upload/></div>
+                    </div>
+                    <input className='hidden'
+                        type="file"
+                        ref={filePickerEgripScan}
+                        onChange={onEgripScanChange}
+                        accept='.png, .jpg, .jpeg, .pdf'/>
                 </div>
-
                 <div className='input-container'>
                     <div className='input-titel'>Скан договора аренды помещения (офиса)</div>
-                    <input className='input-lg'
-                        placeholder='Выберите или перетащите файл' />
+                    <div onClick={onClikContractRentScan} className='input-lg input-uplpd'>
+                        <div className='input-uplpd-placeholder'>{contractRentScanPlaceholder}</div>
+                        <div className='input-uplpd-icon'><Upload/></div>
+                    </div>
+                    <input className='hidden'
+                        type="file"
+                        ref={filePickerContractRentScan}
+                        onChange={onContractRentScanChange}
+                        accept='.png, .jpg, .jpeg, .pdf'/>
                 </div>
                 <div className='input-container'>
                     <div className='input-titel'> </div>
