@@ -1,40 +1,40 @@
 import React from 'react'
 import { useLocation } from 'react-router-dom';
 import './BankDetails.css'
-import { Button, OverlayTrigger, Popover } from 'react-bootstrap';
-import { InfoCircleFill, PlusLg } from 'react-bootstrap-icons';
+import { OverlayTrigger, Popover } from 'react-bootstrap';
+import { InfoCircleFill } from 'react-bootstrap-icons';
 import { useDispatch, useSelector } from 'react-redux';
-import { setBankName, setBik, setCorrespondentAccount, setPaymentAccount } from '../../redux/bankDetails-reducer';
-import { getBank } from '../../asyncAction/test';
+import { getBank } from '../../asyncAction/dadataService';
+import { setBankName, setBik, setCorrespondentAccount, setPaymentAccount } from '../../redux/bankDetailsPage-reducer';
 
 const BankDetails = (props) => {
-    let location = useLocation();
-
     const dispatch = useDispatch();
-    const bik = useSelector(state => state.bankDetailsPage.bik);
-    const bankName = useSelector(state => state.bankDetailsPage.bankName);
-    const paymentAccount = useSelector(state => state.bankDetailsPage.paymentAccount);
-    const correspondentAccount = useSelector(state => state.bankDetailsPage.correspondentAccount);
+    const bankDetails = useSelector(state => state.bankDetailsPage.bankDetails[props.id]);
+
+    const bik = bankDetails.bik;
+    const bankName = bankDetails.bankName;
+    const paymentAccount = bankDetails.paymentAccount;
+    const correspondentAccount = bankDetails.correspondentAccount;
 
 
     let onBikChange = (e) => {
         let newBik = e.target.value;
-        dispatch(setBik(newBik));
+        dispatch(setBik(props.id, newBik));
         if (newBik.length === 9) {
-            dispatch(getBank(newBik));
+            dispatch(getBank(props.id, newBik));
         }
     }
 
     let onBankNameChange = (e) => {
-        dispatch(setBankName(e.target.value));
+        dispatch(setBankName(props.id, e.target.value));
     }
 
     let onPaymentAccountChange = (e) => {
-        dispatch(setPaymentAccount(e.target.value));
+        dispatch(setPaymentAccount(props.id, e.target.value));
     }
 
     let onCorrespondentAccountChange = (e) => {
-        dispatch(setCorrespondentAccount(e.target.value));
+        dispatch(setCorrespondentAccount(props.id, e.target.value));
     }
 
     return (
@@ -105,14 +105,6 @@ const BankDetails = (props) => {
                         </OverlayTrigger>
                     </div>
                 </div>
-            </div>
-
-            <div className='bank-details-btn-wrapper'>
-                <button variant="outline-primary" className="btn-new-details"><PlusLg className='plus' /> <div>Добавить еще один банк</div></button>
-
-                <Button className='bank-details-btn'>
-                    Отправить
-                </Button>
             </div>
         </div>
     )

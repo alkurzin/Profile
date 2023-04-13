@@ -2,14 +2,14 @@ import React from 'react'
 import './YlPage.css'
 import { Button, Form } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux';
-import { setFullName, setISNoContract, setInn, setOgrn, setRegistrationDate, setSmallName } from '../../../redux/ylPage-reducer';
-import { getYL } from '../../../asyncAction/test';
+import { setFullName, setISNoContract, setInn, setOgrn, setRegistrationDate, setShortName } from '../../../redux/ylPage-reducer';
 import { useNavigate } from 'react-router-dom';
+import { getYL } from '../../../asyncAction/dadataService';
 
 const YlPage = () => {
     const dispatch = useDispatch();
     const fullName = useSelector(state => state.ylPage.fullName);
-    const smalName = useSelector(state => state.ylPage.smalName);
+    const shortName = useSelector(state => state.ylPage.shortName);
     const inn = useSelector(state => state.ylPage.inn);
     const innScan = useSelector(state => state.ylPage.innScan);
     const registrationDate = useSelector(state => state.ylPage.registrationDate);
@@ -23,8 +23,8 @@ const YlPage = () => {
         dispatch(setFullName(e.target.value));
     }
 
-    let onSmalNameChange = (e) => {
-        dispatch(setSmallName(e.target.value));
+    let onShortNameChange = (e) => {
+        dispatch(setShortName(e.target.value));
     }
 
     let onRegistrationDateChange = (e) => {
@@ -50,11 +50,19 @@ const YlPage = () => {
     const navigate = useNavigate();
 
     let onNavigate = () => {
-        if (isValid() == true) {
+        if (isValid() === true) {
             navigate('/bankDetails', {
                 state: {
-                    id: 7,
-                    color: 'green'
+                    fullName: fullName,
+                    shortName: shortName,
+                    inn: inn,
+                    innScan: innScan,
+                    registrationDate: registrationDate,
+                    ogrn: ogrn,
+                    ogrnScan: ogrnScan,
+                    egripScan: egripScan,
+                    contractRentScan: contractRentScan,
+                    isNoContract: isNoContract,
                 }
             });
         } else {
@@ -68,7 +76,7 @@ const YlPage = () => {
         }
 
         if (fullName.length === 0
-            || smalName.length === 0
+            || shortName.length === 0
             || registrationDate.length === 0
             || ogrn.length === 0) {
             return false;
@@ -92,8 +100,8 @@ const YlPage = () => {
                 <div className='input-container'>
                     <div className='input-titel'>Наименование сокращенное*</div>
                     <input className='input-lg'
-                        value={smalName}
-                        onChange={onSmalNameChange}
+                        value={shortName}
+                        onChange={onShortNameChange}
                         placeholder='ООО «МПК»' />
                 </div>
                 <div className='input-container'>

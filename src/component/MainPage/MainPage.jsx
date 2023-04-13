@@ -5,7 +5,7 @@ import IpPage from './IpPage/IpPage';
 import YlPage from './YlPage/YlPage';
 
 const MainPage = () => {
-    const [type, setType] = useState(1);
+    const [type, setType] = useState('1');
     
     let onPriorityChange = (e) => {
         let newType = e.target.value;

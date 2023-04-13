@@ -1,5 +1,5 @@
 const SET_FULL_NAME = "SET_FULL_NAME";
-const SET_SMAL_NAME = "SET_SMAL_NAME";
+const SET_SHORT_NAME = "SET_SHORT_NAME";
 const SET_INN = "SET_INN";
 const SET_INN_SCAN = "SET_INN_SCAN";
 const SET_REGISTRATION_DATE = "SET_REGISTRATION_DATE";
@@ -12,7 +12,7 @@ const SET_IS_NO_CONTRACT = "SET_IS_NO_CONTRACT";
 
 let initialState = {
     fullName: "",
-    smalName: "",
+    shortName: "",
     inn: "",
     innScan: "",
     registrationDate: "",
@@ -30,10 +30,10 @@ const ylPageReducer = (state = initialState, action) => {
                 ...state,
                 fullName: action.fullName
             }
-        case SET_SMAL_NAME:
+        case SET_SHORT_NAME:
             return {
                 ...state,
-                smalName: action.smalName
+                shortName: action.shortName
             }
         case SET_INN:
             return {
@@ -87,10 +87,10 @@ export const setFullName = (fullName) => {
     };
 }
 
-export const setSmallName = (smalName) => {
+export const setShortName = (shortName) => {
     return {
-        type: SET_SMAL_NAME,
-        smalName: smalName
+        type: SET_SHORT_NAME,
+        shortName: shortName
     };
 }
 
