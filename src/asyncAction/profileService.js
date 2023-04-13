@@ -2,12 +2,14 @@ import axios from "axios"
 
 export const addProfileFromData = (fullName, shortName, inn, innScan, registrationDate, ogrn, ogrnScan, egripScan, contractRentScan, isNoContract, bankDetails) => {
     var url = "https://localhost:44379/api/Profile";
-    console.log(bankDetails);
     const form = new FormData();
     form.append("fullName", fullName);
     form.append("shortName", shortName);
     form.append("inn", inn);
     form.append("innScan", innScan);
+    form.append("ogrnScan", ogrnScan);
+    form.append("egripScan", egripScan);
+    form.append("contractRentScan", contractRentScan);
     form.append("registrationDate", registrationDate);
     form.append("ogrn", ogrn);
     form.append("isNoContract", isNoContract);
