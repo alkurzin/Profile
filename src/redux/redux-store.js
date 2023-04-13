@@ -2,10 +2,12 @@ import { applyMiddleware, combineReducers, legacy_createStore as createStore} fr
 import thunk from 'redux-thunk';
 import ylPageReducer from './ylPage-reducer';
 import bankDetailsPageReducer from './bankDetailsPage-reducer';
+import ipPageReducer from './ipPage-reducer';
 
 
 let reducers = combineReducers({
     ylPage: ylPageReducer,
+    ipPage: ipPageReducer,
     bankDetailsPage: bankDetailsPageReducer
 });
 

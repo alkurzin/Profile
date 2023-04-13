@@ -1,5 +1,4 @@
 import React from 'react'
-import { useLocation } from 'react-router-dom';
 import './BankDetails.css'
 import { OverlayTrigger, Popover } from 'react-bootstrap';
 import { InfoCircleFill } from 'react-bootstrap-icons';

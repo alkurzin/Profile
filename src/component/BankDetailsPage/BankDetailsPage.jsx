@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import BankDetails from '../BankDetails/BankDetails'
 import { useDispatch, useSelector } from 'react-redux';
 import { PlusLg } from 'react-bootstrap-icons';
@@ -10,7 +10,6 @@ import { useLocation } from 'react-router-dom';
 
 const BankDetailsPage = () => {
   let location = useLocation();
-  console.log(location.state.fullName);
   const dispatch = useDispatch();
   const [id, setId] = useState(1)
   const bankDetails = useSelector(state => state.bankDetailsPage.bankDetails);
