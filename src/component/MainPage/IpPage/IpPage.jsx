@@ -17,10 +17,11 @@ const IpPage = () => {
     const contractRentScan = useSelector(state => state.ipPage.contractRentScan);
     const isNoContract = useSelector(state => state.ipPage.isNoContract);
 
-    const [innScanPlaceholder, setInnScanPlaceholder ] = useState("Выберите или перетащите файл");
-    const [ogrnScanPlaceholder, setOgrnScanPlaceholder ] = useState("Выберите или перетащите файл");
-    const [egripScanPlaceholder, setEgripScanPlaceholder ] = useState("Выберите или перетащите файл");
-    const [contractRentScanPlaceholder, setContractRentScanPlaceholder ] = useState("Выберите или перетащите файл");
+    const [innScanPlaceholder, setInnScanPlaceholder] = useState("Выберите или перетащите файл");
+    const [ogrnScanPlaceholder, setOgrnScanPlaceholder] = useState("Выберите или перетащите файл");
+    const [egripScanPlaceholder, setEgripScanPlaceholder] = useState("Выберите или перетащите файл");
+    const [contractRentScanPlaceholder, setContractRentScanPlaceholder] = useState("Выберите или перетащите файл");
+    const [errorMessage, setErrorMessage] = useState("");
 
     const filePickerInnScan = useRef(null);
     const filePickerOgrnScan = useRef(null);
@@ -66,20 +67,22 @@ const IpPage = () => {
     const navigate = useNavigate();
 
     let onNavigate = () => {
-        navigate('/bankDetails', {
-            state: {
-                fullName: "",
-                shortName: "",
-                inn: inn,
-                innScan: innScan,
-                registrationDate: registrationDate,
-                ogrn: ogrn,
-                ogrnScan: ogrnScan,
-                egripScan: egripScan,
-                contractRentScan: contractRentScan,
-                isNoContract: isNoContract,
-            }
-        });
+        if (isValid()) {
+            navigate('/bankDetails', {
+                state: {
+                    fullName: "",
+                    shortName: "",
+                    inn: inn,
+                    innScan: innScan,
+                    registrationDate: registrationDate,
+                    ogrn: ogrn,
+                    ogrnScan: ogrnScan,
+                    egripScan: egripScan,
+                    contractRentScan: contractRentScan,
+                    isNoContract: isNoContract,
+                }
+            });
+        }
     }
 
     let onClikInnScan = () => {
@@ -98,10 +101,60 @@ const IpPage = () => {
         filePickerContractRentScan.current.click();
     }
 
+    let isValid = () => {
+        if (inn.length === 0) {
+            setErrorMessage("*ИНН пуст");
+            return false;
+        }
+
+        if (!inn.match(/[0-9]{12}/)) {
+            setErrorMessage("*ИНН должен состоять из 12 цифр");
+            return false;
+        }
+
+        if (innScan.length === 0) {
+            setErrorMessage("*Скан ИНН не добавлен");
+            return false;
+        }
+
+        if (ogrn.length === 0) {
+            setErrorMessage("*ОГРНИП пуст");
+            return false;
+        }
+
+        if (!ogrn.match(/[0-9]{15}/)) {
+            
+            setErrorMessage("*ОГРНИП должен состоять из 15 цифр");
+            return false;
+        }
+
+        if (ogrnScan.length === 0) {
+            setErrorMessage("*Скан ОГРНИП не добавлен");
+            return false;
+        }
+
+        if (registrationDate.length === 0) {
+            setErrorMessage("*Дата регистрации не заполнена");
+            return false;
+        }
+
+        if (!registrationDate.match(/[0-9]{2}.[0-9]{2}.[0-9]{4}/)) {
+            setErrorMessage("*Неверный формат даты регистрации");
+            return false;
+        }
+
+        if (egripScan.length === 0) {
+            setErrorMessage("*Скан выписки из ЕГРИП не добавлен");
+            return false;
+        }
+
+        return true;
+    }
+
     return (
         <div>
             <div className='ip-title'>Индивидуальный предприниматель (ИП)</div>
-
+            <div style={{ color: "red" }}>{errorMessage}</div>
             <div className='input-row'>
                 <div className='input-container'>
                     <div className='input-titel'>ИНН*</div>
@@ -115,14 +168,14 @@ const IpPage = () => {
                     <div className='input-titel'>Скан ИНН*</div>
                     <div onClick={onClikInnScan} className='input-lg input-uplpd'>
                         <div className='input-uplpd-placeholder'>{innScanPlaceholder}</div>
-                        <div className='input-uplpd-icon'><Upload/></div>
+                        <div className='input-uplpd-icon'><Upload /></div>
                     </div>
                     <input className='hidden'
                         type="file"
                         ref={filePickerInnScan}
                         //value={innScan}
                         onChange={onInnScanChange}
-                        accept='.png, .jpg, .jpeg, .pdf'/>
+                        accept='.png, .jpg, .jpeg, .pdf' />
                 </div>
 
                 <div className='input-container'>
@@ -137,13 +190,13 @@ const IpPage = () => {
                     <div className='input-titel'>Скан ОГРНИП*</div>
                     <div onClick={onClikOgrnScan} className='input-lg input-uplpd'>
                         <div className='input-uplpd-placeholder'>{ogrnScanPlaceholder}</div>
-                        <div className='input-uplpd-icon'><Upload/></div>
+                        <div className='input-uplpd-icon'><Upload /></div>
                     </div>
                     <input className='hidden'
                         type="file"
                         ref={filePickerOgrnScan}
                         onChange={onOgrnScanChange}
-                        accept='.png, .jpg, .jpeg, .pdf'/>
+                        accept='.png, .jpg, .jpeg, .pdf' />
                 </div>
             </div>
             <div className='input-row'>
@@ -158,25 +211,25 @@ const IpPage = () => {
                     <div className='input-titel'>Скан выписки из ЕГРИП (не старше 3 месяцев)*</div>
                     <div onClick={onClikEgripScan} className='input-lg input-uplpd'>
                         <div className='input-uplpd-placeholder'>{egripScanPlaceholder}</div>
-                        <div className='input-uplpd-icon'><Upload/></div>
+                        <div className='input-uplpd-icon'><Upload /></div>
                     </div>
                     <input className='hidden'
                         type="file"
                         ref={filePickerEgripScan}
                         onChange={onEgripScanChange}
-                        accept='.png, .jpg, .jpeg, .pdf'/>
+                        accept='.png, .jpg, .jpeg, .pdf' />
                 </div>
                 <div className='input-container'>
                     <div className='input-titel'>Скан договора аренды помещения (офиса)</div>
                     <div onClick={onClikContractRentScan} className='input-lg input-uplpd'>
                         <div className='input-uplpd-placeholder'>{contractRentScanPlaceholder}</div>
-                        <div className='input-uplpd-icon'><Upload/></div>
+                        <div className='input-uplpd-icon'><Upload /></div>
                     </div>
                     <input className='hidden'
                         type="file"
                         ref={filePickerContractRentScan}
                         onChange={onContractRentScanChange}
-                        accept='.png, .jpg, .jpeg, .pdf'/>
+                        accept='.png, .jpg, .jpeg, .pdf' />
                 </div>
                 <div className='input-container'>
                     <div className='input-titel'> </div>

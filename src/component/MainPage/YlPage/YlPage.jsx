@@ -24,6 +24,7 @@ const YlPage = () => {
     const [ogrnScanPlaceholder, setOgrnScanPlaceholder ] = useState("Выберите или перетащите файл");
     const [egripScanPlaceholder, setEgripScanPlaceholder ] = useState("Выберите или перетащите файл");
     const [contractRentScanPlaceholder, setContractRentScanPlaceholder ] = useState("Выберите или перетащите файл");
+    const [errorMessage, setErrorMessage] = useState("");
 
     const filePickerInnScan = useRef(null);
     const filePickerOgrnScan = useRef(null);
@@ -112,20 +113,63 @@ const YlPage = () => {
                     isNoContract: isNoContract,
                 }
             });
-        } else {
-            alert("Не все поля заполнены");
         }
     }
 
     let isValid = () => {
-        if (inn.length !== 10) {
+        if (fullName.length === 0) {
+            setErrorMessage("*Полное наименование не заполнено");
             return false;
         }
 
-        if (fullName.length === 0
-            || shortName.length === 0
-            || registrationDate.length === 0
-            || ogrn.length === 0) {
+        if (shortName.length === 0) {
+            setErrorMessage("*Сокращенное наименование не заполнено");
+            return false;
+        }
+
+        if (inn.length === 0) {
+            setErrorMessage("*ИНН пуст");
+            return false;
+        }
+
+        if (!inn.match(/[0-9]{10}/)) {
+            setErrorMessage("*ИНН должен состоять из 10 цифр");
+            return false;
+        }
+
+        if (innScan.length === 0) {
+            setErrorMessage("*Скан ИНН не добавлен");
+            return false;
+        }
+
+        if (ogrn.length === 0) {
+            setErrorMessage("*ОГРН пуст");
+            return false;
+        }
+
+        if (!ogrn.match(/[0-9]{13}/)) {
+            
+            setErrorMessage("*ОГРН должен состоять из 13 цифр");
+            return false;
+        }
+
+        if (ogrnScan.length === 0) {
+            setErrorMessage("*Скан ОГРНИП не добавлен");
+            return false;
+        }
+
+        if (registrationDate.length === 0) {
+            setErrorMessage("*Дата регистрации не заполнена");
+            return false;
+        }
+
+        if (!registrationDate.match(/[0-9]{2}.[0-9]{2}.[0-9]{4}/)) {
+            setErrorMessage("*Неверный формат даты регистрации");
+            return false;
+        }
+
+        if (egripScan.length === 0) {
+            setErrorMessage("*Скан выписки из ЕГРИП не добавлен");
             return false;
         }
 
@@ -135,6 +179,7 @@ const YlPage = () => {
     return (
         <div>
             <div className='yl-title'>Общество с ограниченной ответственностью (ООО)</div>
+            <div style={{ color: "red" }}>{errorMessage}</div>
 
             <div className='input-row'>
                 <div className='input-container'>

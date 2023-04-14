@@ -10,12 +10,9 @@ import { useLocation } from 'react-router-dom';
 
 const BankDetailsPage = () => {
   let location = useLocation();
-  console.log(location.state);
   const dispatch = useDispatch();
   const [id, setId] = useState(1)
   const bankDetails = useSelector(state => state.bankDetailsPage.bankDetails);
-
-  console.log(bankDetails);
 
   let addBankDetail = () => {
     dispatch(setBankDetails({
